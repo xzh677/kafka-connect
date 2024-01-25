@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+
+  kafka_connect:
+    image: {{DOCKER_IMAGE_NAME}}:{{DOCKER_IMAGE_VERSION}}
+    container_name: kafka_connect
+    depends_on:
+      - splunkenterprise
+    environment:
+      - CONNECT_BOOTSTRAP_SERVERS={{CONFLUENT_CLOUD_BOOTSTRAP}}
+      - CONNECT_SECURITY_PROTOCOL=SASL_SSL
+      - CONNECT_SASL_JAAS_CONFIG={{CONFLUENT_CLOUD_SASL_JAAS_CONFIG}}
+      - CONNECT_SASL_MECHANISM=PLAIN
+      - CONNECT_CONSUMER_BOOTSTRAP_SERVERS={{CONFLUENT_CLOUD_BOOTSTRAP}}
+      - CONNECT_CONSUMER_SECURITY_PROTOCOL=SASL_SSL
+      - CONNECT_CONSUMER_SASL_JAAS_CONFIG={{CONFLUENT_CLOUD_SASL_JAAS_CONFIG}}
+      - CONNECT_CONSUMER_SASL_MECHANISM=PLAIN
+      - CONNECT_PRODUCER_BOOTSTRAP_SERVERS={{CONFLUENT_CLOUD_BOOTSTRAP}}
+      - CONNECT_PRODUCER_SECURITY_PROTOCOL=SASL_SSL
+      - CONNECT_PRODUCER_SASL_JAAS_CONFIG={{CONFLUENT_CLOUD_SASL_JAAS_CONFIG}}
+      - CONNECT_PRODUCER_SASL_MECHANISM=PLAIN
+      - CONNECT_GROUP_ID={{GROUP_ID}}
+      - CONNECT_CONFIG_STORAGE_TOPIC={{CONFIG_STORAGE_TOPIC}}
+      - CONNECT_OFFSET_STORAGE_TOPIC={{OFFSET_STORAGE_TOPIC}}
+      - CONNECT_STATUS_STORAGE_TOPIC={{STATUS_STORAGE_TOPIC}}
+      - CONNECT_KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+      - CONNECT_VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+      - CONNECT_INTERNAL_KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+      - CONNECT_INTERNAL_VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+      - CONNECT_REST_ADVERTISED_HOST_NAME=kafka_connect
+      - KAFKA_JMX_OPTS=-Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -javaagent:/opt/prometheus/jmx_prometheus_javaagent.jar=8087:/opt/prometheus/kafka-connect.yml
+    ports:
+      - "8083:8083"
+      - "8087:8087"
+      - "{{SYSLOG_PORT}}:{{SYSLOG_PORT}}"
+
+  splunkenterprise:
+    hostname: splunkenterprise
+    image: splunk/splunk:latest
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - SPLUNK_HEC_TOKEN={{SPLUNK_HEC_TOKEN}}
+      - SPLUNK_PASSWORD=testpass
+    ports:
+      - 8000:8000
+      - 8088:8088

@@ -1,0 +1,12 @@
+{
+    "tasks.max": "1",
+    "connector.class": "io.confluent.connect.syslog.SyslogSourceConnector",
+    "syslog.port": "{{SYSLOG_PORT}}",
+    "syslog.listener": "TCP",
+    "topic": "{{SYSLOG_TOPIC}}",
+    "confluent.topic.bootstrap.servers": "{{CONFLUENT_CLOUD_BOOTSTRAP}}",
+    "confluent.topic.security.protocol": "SASL_SSL",
+    "confluent.topic.sasl.jaas.config": "{{CONFLUENT_CLOUD_SASL_JAAS_CONFIG}}",
+    "confluent.topic.sasl.mechanism": "PLAIN",
+    "confluent.topic": "_confluent-command"
+}

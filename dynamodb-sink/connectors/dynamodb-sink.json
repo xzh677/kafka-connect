@@ -1,0 +1,19 @@
+{
+    "tasks.max": "1",
+    "connector.class": "io.confluent.connect.aws.dynamodb.DynamoDbSinkConnector",
+    "topics": "{{DYNAMODB_TOPICS}}",
+    "aws.dynamodb.region": "ap-southeast-2",
+    "aws.dynamodb.endpoint": "https://dynamodb.ap-southeast-2.amazonaws.com",
+    "confluent.topic.bootstrap.servers": "{{CONFLUENT_CLOUD_BOOTSTRAP}}",
+    "confluent.topic.security.protocol": "SASL_SSL",
+    "confluent.topic.sasl.jaas.config": "{{CONFLUENT_CLOUD_SASL_JAAS_CONFIG}}",
+    "confluent.topic.sasl.mechanism": "PLAIN",
+    "confluent.topic": "_confluent-command",
+    "group.id": "kafka-connect-dynamodb-sink",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+    "aws.dynamodb.pk.hash": "partition",
+    "aws.dynamodb.pk.sort": "offset"
+}

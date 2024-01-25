@@ -1,0 +1,18 @@
+
+# Ignore .env files at all folder levels
+**/.env
+
+# Ignore temporary files and directories
+**/tmp
+**/temp
+**/tmp/*
+**/temp/*
+
+# Ignore any Jar files
+**/*.jar
+
+# Ignore temporary jmx yml file
+**/kafka-connect.tmp.yml
+
+# Ignore MacOS DS_Store
+**/.DS_Store

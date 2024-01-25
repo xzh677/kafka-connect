@@ -1,0 +1,17 @@
+{
+    "tasks.max": "1",
+    "connector.class": "com.splunk.kafka.connect.SplunkSinkConnector",
+    "topics": "{{SYSLOG_TOPIC}}",
+    "splunk.indexes": "main",
+    "splunk.hec.uri": "{{SPLUNK_HEC_URI}}",
+    "splunk.hec.token": "{{SPLUNK_HEC_TOKEN}}",
+    "splunk.sourcetypes": "{{SPLUNK_HEC_SOURCE_TYPE}}",
+    "splunk.hec.ssl.validate.certs": "false",
+    "confluent.topic.bootstrap.servers": "{{CONFLUENT_CLOUD_BOOTSTRAP}}",
+    "confluent.topic.security.protocol": "SASL_SSL",
+    "confluent.topic.sasl.jaas.config": "{{CONFLUENT_CLOUD_SASL_JAAS_CONFIG}}",
+    "confluent.topic.sasl.mechanism": "PLAIN",
+    "confluent.topic": "_confluent-command",
+    "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "group.id": "kafka-connect-splunk-hec-sink"
+}
