@@ -10,8 +10,18 @@ make run
 - Create docker compose yaml under `tmp`
 - Run docker compose
 
-3. Create topic on Kafka
+3. Create topic `syslog-source` on Kafka
 
 
+4. Deploy connectors
+```
+make connector-deploy
+```
 
-4. Test sys log connector
+5. Test sys log connector
+```
+bin/send-syslog.sh
+```
+
+6. Check data
+http://localhost:8088
